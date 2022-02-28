@@ -1,0 +1,63 @@
+<nav class="flex justify-between p-1 bg-gray-50 text-orange-700 relative">
+    <div>
+        <a href="/">
+            <img src="/images/logo.png" alt="app logo" class="w-16 h-16">
+        </a>
+    </div>
+    <div class="flex items-center">
+        <ul class="flex text-2xl font-semibold">
+            <li class="mx-1">
+                <a href="/zawody" class="hover:text-orange-600 {{#if competitions}}text-neutral-700{{/if}}">
+                    Zawody
+                </a>
+            </li>
+            <li class="mx-1">
+                <a href="/wyniki" class="hover:text-orange-600 {{#if results}}text-neutral-700{{/if}}">
+                    Wyniki
+                </a>
+            </li>
+            {{#unless admin}}
+            <li class="mx-1" id="dropdown">
+                <span class="{{#if login}}text-neutral-600{{/if}}{{#if register}}text-neutral-600{{/if}}">Konto</span>
+                <ul class="hidden right-0 bg-gray-50 text-xl text-center rounded-lg p-2 divide-y divide-neutral-700 z-10" id="list">
+                    {{#unless logged}}
+                    <li class="m-1">
+                        <a href="/logowanie" class="hover:text-orange-600 {{#if login}}text-neutral-700{{/if}}">Logowanie</a>
+                    </li>
+                    <li class="m-1">
+                        <a href="/rejestracja" class="hover:text-orange-600 {{#if register}}text-neutral-700{{/if}}">Rejestracja</a>
+                    </li>
+                    {{/unless}}
+                    {{#if logged}}
+                    <li class="m-1">
+                        <a href="/konto" class="hover:text-orange-600 {{#if account}}text-neutral-700{{/if}}">Moje konto</a>
+                    </li>
+                    <li class="m-1">
+                        <a href="/wyloguj" class="hover:text-orange-600">Wyloguj się</a>
+                    </li>
+                    {{/if}}
+                </ul>
+            </li>
+            {{/unless}}
+            {{#if admin}}
+            <li class="mx-1">
+                <a href="/logout" class="hover:text-orange-600">
+                    Wyloguj
+                </a>
+            </li>
+            {{/if}}
+        </ul>
+    </div>
+</nav>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const dropdown = document.querySelector('#dropdown');
+        const list = document.querySelector('#list');
+        dropdown.addEventListener('mouseover', () => {
+            list.classList.replace('hidden', 'absolute');
+        });
+        dropdown.addEventListener('mouseout', () => {
+            list.classList.replace('absolute', 'hidden');
+        });
+    });
+</script>

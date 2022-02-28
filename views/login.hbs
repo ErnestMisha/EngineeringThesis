@@ -1,0 +1,25 @@
+<div class="p-16 h-full">
+    <div class="bg-gray-100 rounded-lg shadow-2xl shadow-orange-600/50 p-10">
+        <h2 class="text-4xl text-neutral-700 font-semibold text-center">Panel Logowania</h2>
+        {{#if message}}
+        <div class="m-4 text-red-600 font-semibold text-lg">
+            {{message}}
+        </div>
+        {{/if}}
+        <div class="flex justify-center text-xl">
+            <form action="/logowanie" method="post" class="my-8 text-neutral-700 w-1/2 text-center">
+                <label class="flex justify-between m-6">Adres email
+                    <input type="text" class="border-2 border-neutral-700 focus:ring ring-orange-400 rounded-lg" name="email" minlength="6" maxlength="30" required>
+                </label>
+                <label class="flex justify-between m-6">Hasło
+                    <input type="password" class="border-2 border-neutral-700 focus:ring ring-orange-400 rounded-lg" name="password" minlength="12" maxlength="40" required>
+                </label>
+                <div class="text-base mb-8">
+                    Nie masz konta? Kliknij <a href="/rejestracja" class="hover:text-orange-600 focus:outline outline-orange-400 rounded-sm">tutaj</a> aby założyć nowe.
+                </div>
+                <input type="submit" value="Zaloguj się"
+                class="text-white border-2 border-orange-600 rounded-lg p-1.5 text-lg bg-orange-700 hover:bg-orange-600 hover:border-orange-700 cursor-pointer focus:outline outline-orange-400">
+            </form>
+        </div>
+    </div>
+</div>

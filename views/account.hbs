@@ -1,0 +1,13 @@
+<div class="m-4 text-center">
+    <h2 class="text-4xl font-semibold m-8">Moje zawody</h2>
+        <ul class="text-2xl divide-y">
+            {{#each events.Competitions}}
+            <li>
+                <a href="/zawody/{{this.id}}" class="block hover:bg-neutral-500 p-2">
+                    {{this.name}}
+                </a>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+</div>

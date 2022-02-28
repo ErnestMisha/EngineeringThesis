@@ -1,0 +1,79 @@
+{{#if message}}
+    <div class="absolute top-0 left-1/4 w-1/2 m-2 p-2 border-4 border-green-500 bg-green-400 rounded-xl text-2xl text-center">{{message}}</div>
+{{/if}}
+<div class="m-4 text-center relative">
+    <h2 class="text-5xl font-semibold m-4">Lista zawodów</h2>
+    {{#if admin}}
+    <a href="/zawody/dodaj"
+    class="border-2 border-green-600 rounded-lg p-2 text-lg bg-green-700 hover:bg-green-600 hover:border-green-700 cursor-pointer absolute right-0 top-0">
+        Dodaj zawody
+    </a>
+    {{/if}}
+    <div class="flex justify-center">
+        <table class="w-full text-lg">
+            <thead class="text-xl">
+                <tr class="border-b">
+                    <th class="py-3">Data</th>
+                    <th class="py-3">Nazwa</th>
+                    <th class="py-3">Miejscowość</th>
+                    {{#if admin}}
+                    <th class="py-3">Aktywne</th>
+                    <th class="py-3">Widoczne</th>
+                    {{/if}}
+                </tr>
+            </thead>
+            <tbody>
+                {{#each events}}
+                <tr class="border-b hover:bg-neutral-500">
+                    <td>
+                        <a href="/zawody/{{this.id}}" class="block py-1">
+                            {{this.dateOfEvent}}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="/zawody/{{this.id}}" class="block py-1">
+                            {{this.name}}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="/zawody/{{this.id}}" class="block py-1">
+                            {{this.location}}
+                        </a>
+                    </td>
+                    {{#if ../admin}}
+                    <td>
+                        <button onclick="sendRequest(this, '{{this.id}}/zmien-status')" data-id="{{this.id}}a"
+                        class="border border-orange-600 rounded-lg p-1 text-sm m-1 bg-orange-700 hover:bg-orange-600 hover:border-orange-700 cursor-pointer">
+                            Zmień
+                        </button>
+                        <a href="/zawody/{{this.id}}" class="inline-block pl-2">
+                            {{#if this.active}}
+                            <span class="text-green-500" id="{{this.id}}a">TAK</span>
+                            {{/if}}
+                            {{#unless this.active}}
+                            <span class="text-red-500" id="{{this.id}}a">NIE</span>
+                            {{/unless}}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="/zawody/{{this.id}}" class="inline-block pr-2 ">
+                            {{#if this.visible}}
+                            <span class="text-green-500" id="{{this.id}}v">TAK</span>
+                            {{/if}}
+                            {{#unless this.visible}}
+                            <span class="text-red-500" id="{{this.id}}v">NIE</span>
+                            {{/unless}}
+                        </a>
+                        <button onclick="sendRequest(this, '{{this.id}}/zmien-widocznosc')" data-id="{{this.id}}v"
+                        class="border border-orange-600 rounded-lg p-1 text-sm m-1 bg-orange-700 hover:bg-orange-600 hover:border-orange-700 cursor-pointer">
+                            Zmień
+                        </button>
+                    </td>
+                    {{/if}}
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="/javascripts/utils.js" defer></script>

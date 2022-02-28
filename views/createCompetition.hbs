@@ -1,0 +1,87 @@
+<div class="p-16 h-full">
+    <div class="bg-gray-100 rounded-lg shadow-2xl shadow-orange-600/50 p-10">
+        <h2 class="text-4xl text-neutral-700 font-semibold text-center">
+            {{#unless edit}}
+            Utwórz
+            {{/unless}}
+            {{#if edit}}
+            Edytuj
+            {{/if}}
+             wydarzenie
+        </h2>
+        {{#if message}}
+        <div class="m-4 text-red-600 font-semibold text-lg">{{message}}</div>
+        {{/if}}
+        <div class="flex justify-center text-xl">
+            <form action="{{target}}" method="post" class="my-8 text-neutral-700 w-3/4 text-center" enctype="multipart/form-data">
+                <label class="flex justify-between m-6">Nazwa
+                    <input type="text" class="w-3/4 border-2 border-neutral-700 focus:ring ring-orange-400 rounded-lg" name="name" minlength="2" maxlength="50" required
+                    {{#if edit}}value="{{event.name}}"{{/if}}>
+                </label>
+                <label class="flex justify-between m-6">Organizator
+                    <input type="text" class="w-3/4 border-2 border-neutral-700 focus:ring ring-orange-400 rounded-lg" name="organizer" minlength="2" maxlength="50" required
+                    {{#if edit}}value="{{event.organizer}}"{{/if}}>
+                </label>
+                <label class="flex justify-between m-6">Miejscowość
+                    <input type="text" class="w-3/4 border-2 border-neutral-700 focus:ring ring-orange-400 rounded-lg" name="location" minlength="2" maxlength="50" required
+                    {{#if edit}}value="{{event.location}}"{{/if}}>
+                </label>
+                <label class="flex justify-between m-6">Limit uczestników
+                    <input type="number" class="w-3/4 border-2 border-neutral-700 focus:ring ring-orange-400 rounded-lg" name="participantsLimit" min="1" required
+                    {{#if edit}}value="{{event.participantsLimit}}"{{/if}}>
+                </label>
+                <label class="flex justify-between m-6">Data wydarzenia
+                    <input type="date" class="text-center w-3/4 border-2 border-neutral-700 focus:ring ring-orange-400 rounded-lg" name="dateOfEvent" required
+                    {{#if edit}}value="{{event.dateOfEvent}}"{{/if}}>
+                </label>
+                <label class="flex justify-between m-6">Opis
+                    <textarea class="w-3/4 border-2 border-neutral-700 focus:ring ring-orange-400 rounded-lg" name="description" minlength="3" maxlength="1000" required>{{#if edit}}{{event.description}}{{/if}}</textarea>
+                </label>
+                <label class="flex justify-between m-6">Data otwarcia zapisów
+                    <input type="datetime-local" class="w-3/4 border-2 border-neutral-700 focus:ring ring-orange-400 rounded-lg text-center" name="openDate" required
+                    {{#if edit}}value="{{openDate}}"{{/if}}>
+                </label>
+                <label class="flex justify-between m-6">Opłata startowa
+                    <input type="number" class="w-3/4 border-2 border-neutral-700 focus:ring ring-orange-400 rounded-lg text-center" name="fee" min="0" required
+                    {{#if edit}}value="{{event.fee}}"{{/if}}>
+                </label>
+                <label class="flex justify-between items-center m-6">Logo zawodów
+                    <div class="w-3/4">
+                        <input type="file" class="hidden" accept="image/*" name="logo" id="logo" onchange="changeText(this, 'logoText')">
+                        <button class="text-white border-2 border-sky-500 rounded-lg p-1 flex items-center mx-auto bg-sky-600 hover:bg-sky-500 hover:border-sky-600 cursor-pointer focus:outline outline-orange-400 w-1/2 text-base"
+                        onclick="document.getElementById('logo').click(); event.preventDefault()">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <div class="text-center w-full truncate" id="logoText">
+                                {{#unless edit}}Kliknij, aby wybrać plik{{/unless}}
+                                {{#if edit}}
+                                    {{#if event.logoPath}}{{event.logoPath}}{{/if}}
+                                    {{#unless event.logoPath}}Kliknij, aby wybrać plik{{/unless}}
+                                {{/if}}
+                            </div>
+                        </button>
+                    </div>
+                </label>
+               <label class="flex justify-between items-center m-6">Regulamin (format pdf)
+                    <div class="w-3/4">
+                        <input type="file" class="hidden" accept=".pdf" name="regulation" id="regulation" onchange="changeText(this, 'regulationText')" {{#unless edit}}required{{/unless}}>
+                        <button class="text-white border-2 border-sky-500 rounded-lg p-1 flex items-center mx-auto bg-sky-600 hover:bg-sky-500 hover:border-sky-600 cursor-pointer focus:outline outline-orange-400 w-1/2 text-base"
+                        onclick="document.getElementById('regulation').click(); event.preventDefault()">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <div class="w-full text-center truncate" id="regulationText">
+                                {{#unless edit}}Kliknij, aby wybrać plik{{/unless}}
+                                {{#if edit}}{{event.regulationPath}}{{/if}}
+                            </div>
+                        </button>
+                    </div>
+                </label>
+                <input type="submit" value="{{#unless edit}}Utwórz zawody{{/unless}}{{#if edit}}Zapisz dane{{/if}}"
+                class="text-white border-2 border-orange-600 rounded-lg p-1.5 text-lg bg-orange-700 hover:bg-orange-600 hover:border-orange-700 cursor-pointer focus:outline outline-orange-400 mt-4">
+            </form>
+        </div>
+    </div>
+</div>
+<script src="/javascripts/utils.js" defer></script>

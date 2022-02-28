@@ -1,0 +1,122 @@
+{{#if message}}
+    <div class="absolute top-0 left-1/4 w-1/2 m-2 p-2 border-4 border-green-500 bg-green-400 rounded-xl text-2xl text-center">{{message}}</div>
+{{/if}}
+<div class="m-4 mt-10 text-center">
+    <h2>
+        <div class="text-4xl">{{event.name}}</div>
+        <div class="text-3xl m-2">{{event.location}}</div>
+        <div class="text-2xl">{{event.dateOfEvent}}</div>
+    </h2>
+    <div class="flex justify-center m-8">
+        {{#if event.logoPath}}
+        <img src="/images/{{event.logoPath}}" alt="competition logo" class="max-h-96 max-w-1/2">
+        {{/if}}
+        {{#unless event.logoPath}}
+        <img src="/images/logo.png" alt="default logo" class="max-h-96 max-w-1/2">
+        {{/unless}}
+    </div>
+    <table class="w-full">
+        <tbody>
+            <tr>
+                <th class="p-2 border">Organizator</th>
+                <td class="p-2 border">{{event.organizer}}</td>
+            </tr>
+            <tr>
+                <th class="p-2 border">Opis zawodów</th>
+                <td class="p-2 border">{{event.description}}</td>
+            </tr>
+            <tr>
+                <th class="p-2 border">Limit uczestników</th>
+                <td class="p-2 border">{{event.participantsLimit}}</td>
+            </tr>
+            <tr>
+                <th class="p-2 border">Regulamin</th>
+                <td class="p-2 border">
+                    <a href="/zawody/regulamin/{{event.regulationPath}}" class="hover:text-orange-600" target="_blank">
+                        Kliknij, aby wyświetlić
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <th class="p-2 border">Kosz uczestnictwa</th>
+                <td class="p-2 border">{{event.fee}} zł</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="flex justify-between mt-12">
+        <div class="text-xl font-semibold p-2 pl-0">Liczba zawodników: {{event.Users.length}}</div>
+        {{#unless admin}}
+            {{#unless limitExhausted}}
+                {{#if user}}
+                    {{#unless signout}}
+                    <a href="/zawody/{{id}}/zapisz" 
+                    class="border-2 border-orange-600 rounded-lg p-2 text-lg bg-orange-700 hover:bg-orange-600 hover:border-orange-700 cursor-pointer">
+                        Zapisz się
+                    </a>
+                    {{/unless}}
+                    {{#if signout}}
+                    <a href="/zawody/{{id}}/wypisz" 
+                    class="border-2 border-red-600 rounded-lg p-2 text-lg bg-red-700 hover:bg-red-600 hover:border-red-700 cursor-pointer">
+                        Wypisz się
+                    </a>
+                    {{/if}}
+                {{/if}}
+                {{#unless user}}
+                    <div class="text-green-600 text-lg">Zaloguj się, aby wziąć udział</div>
+                {{/unless}}
+            {{/unless}}
+            {{#if limitExhausted}}
+                <div class="text-red-600 text-lg">Rejestracja zamknięta</div>
+            {{/if}}
+        {{/unless}}
+        {{#if admin}}
+            <a href="/zawody/{{id}}/edytuj"
+            class="border-2 border-green-600 rounded-lg p-2 text-lg bg-green-700 hover:bg-green-600 hover:border-green-700 cursor-pointer">
+                Edytuj zawody
+            </a>
+        {{/if}}
+    </div>
+    {{#if admin}}
+        <a href="/zawody/{{id}}/pobierz-liste"
+        class="border-2 border-sky-500 rounded-lg p-2 text-lg bg-sky-600 hover:bg-sky-500 hover:border-sky-600 cursor-pointer flex w-fit items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+            Pobierz listę zawodników
+        </a>
+    {{/if}}
+    <table class="my-6 w-full">
+        <thead class="text-lg">
+            <tr>
+                <th class="p-2">Imię i nazwisko</th>
+                <th class="p-2">Miejscowość</th>
+                <th class="p-2">Klub</th>
+                <th class="p-2">Opłacony</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y">
+            {{#each event.Users}}
+            <tr class="divide-x">
+                <td class="p-2">{{this.firstName}} {{this.lastName}}</td>
+                <td class="p-2">{{this.city}}</td>
+                <td class="p-2">{{this.club}}</td>
+                <td class="p-2">
+                    {{#if this.Competitor.paid}}
+                    <span class="text-green-500" {{#if ../admin}}id="{{this.id}}"{{/if}}>TAK</span>
+                    {{/if}}
+                    {{#unless this.Competitor.paid}}
+                    <span class="text-red-500" {{#if ../admin}}id="{{this.id}}"{{/if}}>NIE</span>
+                    {{/unless}}
+                    {{#if ../admin}}
+                    <button 
+                    class="border border-orange-600 rounded-lg p-1 text-sm ml-2 bg-orange-700 hover:bg-orange-600 hover:border-orange-700 cursor-pointer" data-id="{{this.id}}" onclick="sendRequest(this, 'zmien-platnosc', true)">
+                        Zmień
+                    </button>
+                    {{/if}}
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+<script src="/javascripts/utils.js" defer></script>

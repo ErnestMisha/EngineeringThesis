@@ -1,0 +1,68 @@
+<div class="p-16 h-full">
+    <div class="bg-gray-100 rounded-lg shadow-2xl shadow-orange-600/50 p-10">
+        <h2 class="text-4xl text-neutral-700 font-semibold text-center">Zakładanie konta</h2>
+        {{#if message}}
+        <div class="m-4 text-red-600 font-semibold text-lg">{{message}}</div>
+        {{/if}}
+        <div class="flex justify-center text-xl">
+            <form action="/rejestracja" method="post" class="my-8 text-neutral-700 w-1/2 text-center">
+                <label class="flex justify-between m-6">Imię
+                    <input type="text" class="w-1/2 border-2 border-neutral-700 focus:ring ring-orange-400 rounded-lg" name="firstName" minlength="3" maxlength="26" required>
+                </label>
+                <label class="flex justify-between m-6">Nazwisko
+                    <input type="text" class="w-1/2 border-2 border-neutral-700 focus:ring ring-orange-400 rounded-lg" name="lastName" minlength="2" maxlength="40" required>
+                </label>
+                <label class="flex justify-between m-6">Data urodzenia
+                    <input type="date" class="cursor-pointer w-1/2 border-2 border-neutral-700 focus:ring ring-orange-400 rounded-lg text-center" name="dateOfBirth" required>
+                </label>
+                <div class="flex justify-between m-6">Płeć
+                    <div class="w-1/2 flex justify-between">
+                        <label class="cursor-pointer">Mężczyzna
+                            <input type="radio" name="gender" value="male"
+                            class="ml-1 appearance-none cursor-pointer rounded-full h-3.5 w-3.5 border-2 border-neutral-700 checked:border-0 checked:bg-orange-500 ring-offset-1 checked:ring-2 checked:ring-orange-400" required>
+                        </label>/
+                        <label class="cursor-pointer">Kobieta
+                            <input type="radio" name="gender" value="female"
+                            class="ml-1 appearance-none cursor-pointer rounded-full h-3.5 w-3.5 border-2 border-neutral-700 checked:border-0 checked:bg-orange-500 ring-offset-1 checked:ring-2 checked:ring-orange-400">
+                        </label>
+                    </div>
+                </div>
+                <label class="flex justify-between m-6">Kraj
+                    <input type="text" class="w-1/2 border-2 border-neutral-700 focus:ring ring-orange-400 rounded-lg" name="country" minlength="3" maxlength="40" required>
+                </label>
+                <label class="flex justify-between m-6">Miasto
+                    <input type="text" class="w-1/2 border-2 border-neutral-700 focus:ring ring-orange-400 rounded-lg" name="city" minlength="3" maxlength="40" required>
+                </label>
+                <label class="flex justify-between m-6">Ulica
+                    <input type="text" class="w-1/2 border-2 border-neutral-700 focus:ring ring-orange-400 rounded-lg" name="street" minlength="3" maxlength="40">
+                </label>
+                <label class="flex justify-between m-6">Numer domu
+                    <input type="text" class="w-1/2 border-2 border-neutral-700 focus:ring ring-orange-400 rounded-lg" name="houseNumber" minlength="1" maxlength="10" required>
+                </label>
+                <label class="flex justify-between m-6">Klub
+                    <input type="text" class="w-1/2 border-2 border-neutral-700 focus:ring ring-orange-400 rounded-lg" name="club" minlength="2" maxlength="40">
+                </label>
+                <label class="flex justify-between m-6">Numer telefonu
+                    <div class="relative flex w-1/2 items-center">
+                      <div class="absolute bg-neutral-200 rounded-tl-lg rounded-bl-lg border-r-2 border-neutral-700 ml-0.5 px-1">+48</div>
+                      <input type="tel" class="pl-12 w-full border-2 border-neutral-700 focus:ring ring-orange-400 rounded-lg" name="phone" minlength="9" maxlength="9" required>
+                    </div>
+                </label>
+                <label class="flex justify-between m-6">Adres email
+                    <input type="email" class="w-1/2 border-2 border-neutral-700 focus:ring ring-orange-400 rounded-lg" name="email" minlength="6" maxlength="30" required>
+                </label>
+                <label class="flex justify-between m-6">Hasło
+                    <input type="password" class="w-1/2 border-2 border-neutral-700 focus:ring ring-orange-400 rounded-lg" name="password" minlength="12" maxlength="40" required>
+                </label>
+                <label class="flex justify-between m-6">Potwierdź hasło
+                    <input type="password" class="w-1/2 border-2 border-neutral-700 focus:ring ring-orange-400 rounded-lg" name="confirmPassword" minlength="12" maxlength="40" required>
+                </label>
+                <div class="text-base mb-8">
+                    Masz już konto? Kliknij <a href="/logowanie" class="hover:text-orange-600 focus:outline outline-orange-400 rounded-sm">tutaj</a> aby się zalogować.
+                </div>
+                <input type="submit" value="Załóż konto"
+                class="text-white border-2 border-orange-600 rounded-lg p-1.5 text-lg bg-orange-700 hover:bg-orange-600 hover:border-orange-700 cursor-pointer focus:outline outline-orange-400">
+            </form>
+        </div>
+    </div>
+</div>

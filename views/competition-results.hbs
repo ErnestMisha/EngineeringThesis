@@ -1,0 +1,56 @@
+<div class="m-4 text-center relative">
+    <h2 class="text-5xl font-semibold m-4">{{title}}</h2>
+    <div class="flex justify-center">
+        <table class="w-full text-lg">
+            <thead class="text-xl">
+                <tr>
+                    <th class="py-3">Miejsce</th>
+                    <th class="py-3">Imię i nazwisko</th>
+                    <th class="py-3">Miejscowość</th>
+                    <th class="py-3">Klub</th>
+                    <th class="py-3">Wynik</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y">
+                {{#each queryResults}}
+                <tr id="{{this.position}}">
+                    <td class="py-3">{{this.position}}</td>
+                    <td class="py-3">{{this.name}}</td>
+                    <td class="py-3">{{this.city}}</td>
+                    <td class="py-3">{{this.club}}</td>
+                    <td class="py-3">{{this.result}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+const socket = io(`/${location.pathname.slice(-36)}`);
+socket.on('result', msg => {
+    const rows = document.getElementsByTagName('tbody')[0].children;
+    const tr = rows.namedItem(msg.position);
+    const content = `
+            <td class="py-3">${msg.position}</td>
+            <td class="py-3">${msg.name}</td>
+            <td class="py-3">${msg.city}</td>
+            <td class="py-3">${msg.club}</td>
+            <td class="py-3">${msg.result}</td>
+        `;
+    if(!tr) {
+        scroll({
+            top: document.body.offsetHeight,
+            behavior: 'smooth'
+        });
+        const table = document.getElementsByTagName('table')[0];
+        let newRow = table.insertRow(-1);
+        newRow.innerHTML = content;
+    }
+    else {
+        tr.innerHTML = content;
+    }
+    const now = new Date();
+    console.log(now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + ':' + now.getMilliseconds());
+});
+</script>

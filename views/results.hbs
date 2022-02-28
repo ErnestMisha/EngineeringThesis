@@ -1,0 +1,12 @@
+<div class="m-4 text-center relative">
+    <h2 class="text-5xl font-semibold m-4">Lista wyników</h2>
+    <ul class="divide-y">
+        {{#each results}}
+            <li class="text-xl">
+                <a href="/wyniki/{{this.uuid}}" class="block hover:bg-neutral-500 p-2">
+                    {{this.name}}
+                </a>
+            </li>
+        {{/each}}
+    </ul>
+</div>

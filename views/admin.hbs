@@ -1,0 +1,22 @@
+<div class="h-screen flex justify-center items-center text-neutral-700 text-center">
+    <div class="w-5/6 h-5/6 bg-gray-100 rounded-lg shadow-2xl shadow-orange-600/50 p-10 flex justify-center items-center">
+        <div>
+            <h2 class="font-semibold text-4xl mb-4">Panel Logowania Administratora</h2>
+            <div class="flex justify-center my-auto text-xl">
+                <form action="/admin" method="post" class="my-6 text-neutral-700 w-full text-center">
+                    <label class="flex justify-between m-6">Nazwa
+                        <input type="text" class="border-2 border-neutral-700 focus:ring ring-orange-400 rounded-lg" name="username" minlength="2" maxlength="30" required>
+                    </label>
+                    <label class="flex justify-between m-6">Hasło
+                        <input type="password" class="border-2 border-neutral-700 focus:ring ring-orange-400 rounded-lg" name="password" minlength="12" maxlength="40" required>
+                    </label>
+                    <div class="text-base mb-8">
+                        Nie jesteś administratorem? Kliknij <a href="/logowanie" class="hover:text-orange-600 focus:outline outline-orange-400 rounded-sm">tutaj</a> aby zalogować się jako użytkownik.
+                    </div>
+                    <input type="submit" value="Zaloguj się"
+                    class="text-white border-1.5 border-orange-600 rounded-lg p-2 text-lg bg-orange-700 hover:bg-orange-600 hover:border-orange-700 cursor-pointer focus:outline outline-orange-400">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
